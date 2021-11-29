@@ -1,0 +1,148 @@
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{nkmaths}[2020/02/27 Maths]
+
+
+\RequirePackage{mathtools}
+\mathtoolsset{
+	mathic,
+	showonlyrefs
+}
+\RequirePackage{amsthm}
+\makeatletter
+\@ifpackageloaded{kpfonts}{}{\RequirePackage{amssymb}}
+\makeatother
+
+%%
+%% ===== text in math mode
+%%
+
+\newcommand*{\qtext}[1]{\ensuremath{\quad\text{#1}\quad}}
+\newcommand*{\qqtext}[1]{\ensuremath{\qquad\text{#1}\qquad}}
+
+%%
+%% ===== cal, frak, bb, bf
+%%
+
+\usepackage[bb=boondox]{mathalfa}
+
+\makeatletter
+\def\calFactory#1{%
+\expandafter\def\csname c#1\endcsname{\mathcal{#1}}}
+\def\frakFactory#1{%
+\expandafter\def\csname k#1\endcsname{\mathfrak{#1}}}
+\def\bbFactory#1{%
+\expandafter\def\csname b#1\endcsname{\mathbb{#1}}}
+\def\bfFactory#1{%
+\expandafter\def\csname f#1\endcsname{\mathbf{#1}}}
+\newcounter{ctr}
+\loop
+\stepcounter{ctr}
+\edef\X{\@Alph\c@ctr}%
+\edef\x{\@alph\c@ctr}%
+\expandafter\calFactory\X
+\expandafter\frakFactory\X
+\expandafter\frakFactory\x
+\expandafter\bbFactory\X
+\expandafter\bfFactory\X
+\ifnum\thectr<26
+\repeat
+\makeatother
+
+
+%%
+%% ===== ensembles
+%%
+\newcommand{\mathset}[1]{\mathbf{#1}}
+
+\newcommand{\N}{\mathset{N}}
+\newcommand{\Z}{\mathset{Z}}
+\newcommand{\Q}{\mathset{Q}}
+\newcommand{\R}{\mathset{R}}
+\newcommand{\Rd}{{\mathset{R}^{\!d}}}
+\newcommand{\C}{\mathset{C}}
+\newcommand{\Leb}{\mathbb{L}}
+
+
+%%
+%% ===== probabilités
+%%
+\newcommand{\mathproba}[1]{\mathbb{#1}}
+
+\newcommand{\e}{\mathproba{E}}
+\newcommand{\p}{\mathproba{P}}
+\newcommand{\1}{\mathproba{1}}
+\newcommand{\I}[1]{\mathproba{1}_{\lbrace #1 \rbrace}}
+
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+%%
+%% ===== alias
+%%
+\let\var\Var
+\let\cov\Cov
+\let\eps\varepsilon
+\let\xto\xrightarrow
+
+\renewcommand{\geq}{\geqslant}
+\renewcommand{\leq}{\leqslant}
+
+%%
+%% ===== différentielle: \D existe dans kpfonts 
+%%
+\providecommand{\D}{}
+\renewcommand{\D}{\mathop{}\mathopen{}\mathrm{d}}
+
+%%
+%% ===== theorem
+%%
+\newtheorem{lemma}{Lemme}
+\newtheorem{proposition}{Proposition}
+\newtheorem{theorem}{Théorème}
+\newtheorem{definition}{Définition}
+\newtheorem{example}{Exemple}
+\newtheorem{exercise}{Exercice}
+\newtheorem{remark}{Remarque}
+\newtheorem{corollary}{Corollaire}
+
+%%
+%% ===== abbrev
+%%
+
+\makeatletter
+\newcommand*{\eg}{e.g.\@\xspace}
+\newcommand*{\ie}{i.e.\@\xspace}
+\newcommand*{\suchthat}{s.t.\@\xspace}
+\newcommand*{\etc}{%
+    \@ifnextchar{.}%
+        {etc}%
+        {etc.\@\xspace}%
+}
+\newcommand*{\iid}{%
+    \@ifnextchar{.}%
+        {i.i.d}%
+        {i.i.d.\@\xspace}%
+}
+\makeatother
+
+% Math abbrev (pas de xspace)
+
+\newcommand*{\almostsurely}{\mathrm{a.s.}} % pas de xspace en mode math
+
+%%
+%% ===== intervals, pair delimiters
+%%
+
+\ifcsname llbracket\endcsname% % already defined using kpfonts
+\else%
+\RequirePackage{stmaryrd}    
+\fi%
+
+\DeclarePairedDelimiter{\intervalOO}{]}{[}
+\DeclarePairedDelimiter{\intervalOC}{]}{]}
+\DeclarePairedDelimiter{\intervalCO}{[}{[}
+\DeclarePairedDelimiter{\intervalCC}{[}{]}
+\DeclarePairedDelimiter{\set}{\{}{\}}
+\DeclarePairedDelimiter{\intervalN}{\llbracket}{\rrbracket}

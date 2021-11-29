@@ -1,0 +1,51 @@
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{nkpresentation}[2020/02/27 HDR Presentation]
+
+
+\RequirePackage[T1]{fontenc}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage{csquotes}
+\RequirePackage[frenchstyle,narrowiints,partialup]{kpfonts}
+\RequirePackage{xcolor}
+\RequirePackage{hyperref}
+
+%%
+%% ====== xcolor
+%%
+
+\definecolor{myred}{rgb}{.8,0,0}
+\definecolor{mygreen}{rgb}{0,.8,0}
+\definecolor{myblue}{rgb}{0,0,.8}
+\definecolor{mydarkblue}{rgb}{0,0,.5}
+\definecolor{mydarkgreen}{rgb}{0,.5,0}
+\definecolor{mydarkred}{rgb}{.5,0,0}
+\definecolor{mylightblue}{rgb}{0.4,0.4,0.6}
+\definecolor{mylightred}{rgb}{0.6,0.4,0.4}
+\definecolor{mylightgreen}{rgb}{0.4,0.6,0.4}
+
+%%
+%% ===== hyperref
+%%
+
+\hypersetup{%
+    colorlinks=true,%
+    breaklinks=true,%
+    linkcolor=mydarkred,%
+    anchorcolor=black,%
+    citecolor=mydarkgreen,%
+    filecolor=mydarkblue,%
+    menucolor=mydarkred,%
+    urlcolor=mydarkred,%
+}
+
+%%
+%% ===== titles
+%%
+
+\addtokomafont{section}{\color{mydarkblue}}
+\addtokomafont{subsection}{\color{mydarkred}}
+
+\newcommand{\addsubsec}[1]{%
+\subsection*{#1}
+\addcontentsline{toc}{subsection}{#1}%
+}
