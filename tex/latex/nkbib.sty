@@ -1,0 +1,50 @@
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{nkbib}[2021/12/06]
+
+\RequirePackage[%
+    backend=biber,
+    style=authoryear,%
+    date=year,%
+    sorting=ynt,%
+    refsection=chapter,%
+]{biblatex}
+
+\DeclareSourcemap{
+    \maps[datatype=bibtex]{
+        %%
+        %% on ajoute NK pour trier les publis
+        %%
+        \map[overwrite]{
+            \step[fieldsource=author, match=\regexp{Klutchnikoff}, final]
+            \step[fieldsource=keywords, match=\regexp{\A.+\Z}, final]
+            \step[fieldset=keywords, fieldvalue={,}, append]
+        }
+        \map[overwrite]{
+            \step[fieldsource=author, match=\regexp{Klutchnikoff}, final]
+            \step[fieldset=keywords, fieldvalue={NK}, append]
+        }
+        %%
+        %% Pas d'URL si DOI
+        %%
+        \map[overwrite]{
+            \step[fieldsource=doi, final]
+            \step[fieldset=url, null]
+            \step[fieldset=eprint, null]
+        }
+    }
+}
+
+\defbibheading{nkbibliography}[]{\addsec{#1}}
+\defbibheading{nksubbibliography}[]{\subsection*{#1}}
+
+\newcommand{\printbib}{%
+\printbibheading[title={Bibliographie},heading=nkbibliography]
+\printbibliography[
+    heading=nksubbibliography,
+    keyword={NK},
+    title={Personelle}]
+\printbibliography[
+    heading=nksubbibliography,
+    notkeyword={NK},
+    title={Générale}]
+}
